@@ -2587,6 +2587,20 @@
     let taskSelectMode = false;
     const selectedTaskIds = new Set();
 
+    function syncChaptersAfterTaskDeletion(removedTasks) {
+      removedTasks.forEach(t => {
+        if (t.completed && t.chapterId && appChapters[t.chapterId]) {
+          const anotherCompleted = appTasks.some(rem => rem.chapterId === t.chapterId && rem.completed);
+          if (!anotherCompleted) {
+            appChapters[t.chapterId].completed = false;
+            appChapters[t.chapterId].completedDate = null;
+            appChapters[t.chapterId].targetDate = '';
+            appChapters[t.chapterId].revisionStatus = 'Not Started';
+          }
+        }
+      });
+    }
+
     function updateTaskBulkBar() {
       const bar = document.getElementById('taskBulkActionBar');
       const countText = document.getElementById('taskSelectedCountText');
@@ -2761,7 +2775,9 @@
 
         card.querySelector('.delete-task-btn').addEventListener('click', () => {
           showConfirmModal('Delete Task?', `Are you sure you want to delete "${task.title}"?`, () => {
+            const removed = appTasks.filter(t => t.id === task.id);
             appTasks = appTasks.filter(t => t.id !== task.id);
+            syncChaptersAfterTaskDeletion(removed);
             saveState();
             refreshAllViews();
             showToast('Task deleted successfully.', 'info');
@@ -4195,7 +4211,9 @@
         `Delete ${count} Selected Task${count > 1 ? 's' : ''}?`,
         `Are you sure you want to delete ${count} selected task${count > 1 ? 's' : ''}?`,
         () => {
+          const removed = appTasks.filter(t => selectedTaskIds.has(t.id));
           appTasks = appTasks.filter(t => !selectedTaskIds.has(t.id));
+          syncChaptersAfterTaskDeletion(removed);
           selectedTaskIds.clear();
           taskSelectMode = false;
           saveState();
