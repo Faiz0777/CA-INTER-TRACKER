@@ -564,6 +564,70 @@
 
           </div>
 
+          <!-- APPLE-INSPIRED STRUCTURED DASHBOARD FOOTER -->
+          <footer class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 text-[12px] leading-relaxed text-[#6e6e73] dark:text-slate-400" style="font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;">
+            <!-- Subtle Footnote -->
+            <p class="text-[11px] text-[#86868b] dark:text-slate-500 pb-4 border-b border-slate-200/80 dark:border-slate-800">
+              All study progress, tasks, chapter notes, and imported study plans are stored locally on your device. Syllabus structure and exam countdown targets can be customized anytime in Settings.
+            </p>
+
+            <!-- Multi-Column Directory (Major Sections & Subsections) -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 py-6">
+              <div>
+                <h4 class="font-semibold text-[#1d1d1f] dark:text-slate-200 mb-2.5 text-[12px]">Study &amp; Planning</h4>
+                <ul class="space-y-1.5">
+                  <li><button type="button" data-footer-tab="dashboard" class="footer-nav-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Dashboard</button></li>
+                  <li><button type="button" data-footer-tab="tasks" class="footer-nav-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">To-Do List</button></li>
+                  <li><button type="button" data-footer-tab="calendar" class="footer-nav-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Study Calendar</button></li>
+                  <li><button type="button" id="footerOpenTimerBtn" class="hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Focus Timer</button></li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 class="font-semibold text-[#1d1d1f] dark:text-slate-200 mb-2.5 text-[12px]">ICAI Syllabus</h4>
+                <ul class="space-y-1.5">
+                  <li><button type="button" data-footer-tab="subjects" class="footer-nav-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Subject Tracker</button></li>
+                  <li><button type="button" id="footerGroup1Btn" class="hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Group I (Papers 1–3)</button></li>
+                  <li><button type="button" id="footerGroup2Btn" class="hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Group II (Papers 4–6)</button></li>
+                  <li><button type="button" data-footer-tab="analytics" class="footer-nav-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Progress Analytics</button></li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 class="font-semibold text-[#1d1d1f] dark:text-slate-200 mb-2.5 text-[12px]">Extras &amp; Tools</h4>
+                <ul class="space-y-1.5">
+                  <li><button type="button" data-footer-extras="recommender" class="footer-extras-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">What to Study Next</button></li>
+                  <li><button type="button" data-footer-extras="checkers" class="footer-extras-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Practical Checkers</button></li>
+                  <li><button type="button" data-footer-extras="pace" class="footer-extras-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Pace Calculator</button></li>
+                  <li><button type="button" data-footer-extras="revision" class="footer-extras-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Revision Schedule</button></li>
+                  <li><button type="button" data-footer-extras="reference" class="footer-extras-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Formulas &amp; Notes</button></li>
+                  <li><button type="button" data-footer-extras="studyplan" class="footer-extras-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Study Plan Import</button></li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 class="font-semibold text-[#1d1d1f] dark:text-slate-200 mb-2.5 text-[12px]">About &amp; Account</h4>
+                <ul class="space-y-1.5">
+                  <li><button type="button" data-footer-tab="settings" class="footer-nav-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Settings</button></li>
+                  <li><button type="button" id="openSpecialThanksBtn" class="hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Special Thanks</button></li>
+                  <li><button type="button" id="openPrivacyPolicyBtn" class="hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Privacy Policy</button></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Bottom Legal & Copyright Bar -->
+            <div class="pt-4 border-t border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-[#86868b] dark:text-slate-500">
+              <p>Copyright © 2026 Faiz Anwar. All rights reserved.</p>
+              <div class="flex flex-wrap items-center gap-3">
+                <button type="button" id="footerPrivacyInlineBtn" class="hover:text-[#1d1d1f] dark:hover:text-slate-300 hover:underline underline-offset-2 transition">Privacy Policy</button>
+                <span class="text-slate-300 dark:text-slate-700">|</span>
+                <button type="button" id="footerThanksInlineBtn" class="hover:text-[#1d1d1f] dark:hover:text-slate-300 hover:underline underline-offset-2 transition">Special Thanks</button>
+                <span class="text-slate-300 dark:text-slate-700">|</span>
+                <span>India</span>
+              </div>
+            </div>
+          </footer>
+
         </section>
 
         <!-- ========================================== -->
@@ -694,8 +758,7 @@
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <div class="flex items-center gap-2">
-                  <h2 class="text-xl font-bold text-slate-900 dark:text-white">ICAI CA Intermediate Subject Tracker</h2>
-                  <span class="text-xs font-bold px-2 py-0.5 rounded-md bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300">Official ICAI Syllabus (94 Chapters)</span>
+                  <h2 class="text-xl font-bold text-slate-900 dark:text-white">CA Intermediate Subject Tracker</h2>
                 </div>
                 <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Track all 6 papers chapter-wise with exact ICAI names, target dates, revision levels, notes, and instant two-way To-Do List sync.</p>
               </div>
@@ -1740,6 +1803,54 @@
   </div>
 
   <!-- ========================================== -->
+  <!-- MODAL: SPECIAL THANKS -->
+  <!-- ========================================== -->
+  <div id="specialThanksModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl border border-slate-200 dark:border-slate-700 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-700">
+        <h3 class="text-base font-bold text-slate-900 dark:text-white">Special Thanks</h3>
+        <button id="closeSpecialThanksBtn" aria-label="Close special thanks" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="space-y-3 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+        <div class="p-3.5 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50">
+          <p class="font-bold text-indigo-800 dark:text-indigo-300 mb-1">The Institute of Chartered Accountants of India (ICAI)</p>
+          <p>Heartfelt thanks to ICAI for the comprehensive CA Intermediate syllabus, official study materials, and academic framework that guide every step of this preparation journey.</p>
+        </div>
+        <div class="p-3.5 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50">
+          <p class="font-bold text-emerald-800 dark:text-emerald-300 mb-1">Gemini</p>
+          <p>Special thanks to Gemini for designing, coding, and refining CA Inter Tracker to make daily study planning, revision tracking, and exam preparation effortless.</p>
+        </div>
+      </div>
+      <div class="pt-2 flex justify-end">
+        <button id="okSpecialThanksBtn" class="px-5 py-2 text-xs font-semibold rounded-xl bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: PRIVACY POLICY -->
+  <!-- ========================================== -->
+  <div id="privacyPolicyModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-md p-6 shadow-2xl border border-slate-200 dark:border-slate-700 space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-700">
+        <h3 class="text-base font-bold text-slate-900 dark:text-white">Privacy Policy</h3>
+        <button id="closePrivacyPolicyBtn" aria-label="Close privacy policy" class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+      <div class="space-y-2.5 text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+        <p><strong>100% Local &amp; Private:</strong> CA Inter Tracker operates entirely in your web browser. Your study tasks, chapter progress, personal notes, focus sessions, and imported study plans are stored strictly in your device's local storage.</p>
+        <p><strong>No External Data Collection:</strong> We do not collect, transmit, or store any personal data on external servers. You can export a JSON backup or clear all stored data anytime from Settings.</p>
+      </div>
+      <div class="pt-2 flex justify-end">
+        <button id="okPrivacyPolicyBtn" class="px-5 py-2 text-xs font-semibold rounded-xl bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
   <!-- MODAL: CONFIRMATION DIALOG -->
   <!-- ========================================== -->
   <div id="confirmModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
@@ -1879,6 +1990,20 @@
               };
             }
           });
+        });
+
+        // Auto-sync completion dates for all completed chapters from To-Do List tasks
+        Object.keys(appChapters).forEach(chId => {
+          const chState = appChapters[chId];
+          if (chState && chState.completed) {
+            const linkedTask = appTasks.find(t => t.chapterId === chId && t.completed && t.completedDate);
+            if (linkedTask) {
+              chState.completedDate = linkedTask.completedDate;
+              chState.targetDate = linkedTask.completedDate;
+            } else if (chState.completedDate && !chState.targetDate) {
+              chState.targetDate = chState.completedDate;
+            }
+          }
         });
 
       } catch (err) {
@@ -2753,7 +2878,7 @@
                       : ''
                   }
                 </div>
-                ${chState.targetDate ? `<span class="text-[10px] text-slate-400 block mt-0.5">Target: ${chState.targetDate}</span>` : ''}
+
               </div>
             </div>
 
@@ -3760,6 +3885,72 @@
     });
     document.getElementById('clearNotesBtn').addEventListener('click', () => {
       document.getElementById('chapterNotesTextarea').value = '';
+    });
+
+    // Special Thanks Modal handlers
+    document.getElementById('openSpecialThanksBtn').addEventListener('click', () => {
+      document.getElementById('specialThanksModal').classList.remove('hidden');
+    });
+    document.getElementById('closeSpecialThanksBtn').addEventListener('click', () => {
+      document.getElementById('specialThanksModal').classList.add('hidden');
+    });
+    document.getElementById('okSpecialThanksBtn').addEventListener('click', () => {
+      document.getElementById('specialThanksModal').classList.add('hidden');
+    });
+
+    // Privacy Policy & Footer Directory Links
+    document.getElementById('footerThanksInlineBtn').addEventListener('click', () => {
+      document.getElementById('specialThanksModal').classList.remove('hidden');
+    });
+
+    function openPrivacyModal() {
+      document.getElementById('privacyPolicyModal').classList.remove('hidden');
+    }
+    document.getElementById('openPrivacyPolicyBtn').addEventListener('click', openPrivacyModal);
+    document.getElementById('footerPrivacyInlineBtn').addEventListener('click', openPrivacyModal);
+    document.getElementById('closePrivacyPolicyBtn').addEventListener('click', () => {
+      document.getElementById('privacyPolicyModal').classList.add('hidden');
+    });
+    document.getElementById('okPrivacyPolicyBtn').addEventListener('click', () => {
+      document.getElementById('privacyPolicyModal').classList.add('hidden');
+    });
+
+    document.querySelectorAll('.footer-nav-link').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const t = btn.getAttribute('data-footer-tab');
+        if (t === 'extras') showExtrasLauncherGrid();
+        switchTab(t);
+        document.querySelector('main')?.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    document.querySelectorAll('.footer-extras-link').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tool = btn.getAttribute('data-footer-extras');
+        switchTab('extras');
+        openExtrasTool(tool);
+        document.querySelector('main')?.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+    document.getElementById('footerOpenTimerBtn').addEventListener('click', () => {
+      document.getElementById('timerModal').classList.remove('hidden');
+    });
+
+    document.getElementById('footerGroup1Btn').addEventListener('click', () => {
+      currentSubjectGroupFilter = 'GROUP1';
+      updateGroupFilterButtons('filterGroup1');
+      renderSubjectTracker();
+      switchTab('subjects');
+      document.querySelector('main')?.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('footerGroup2Btn').addEventListener('click', () => {
+      currentSubjectGroupFilter = 'GROUP2';
+      updateGroupFilterButtons('filterGroup2');
+      renderSubjectTracker();
+      switchTab('subjects');
+      document.querySelector('main')?.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
     // Confirmation Modal handlers
