@@ -247,7 +247,7 @@
           </button>
           <button data-tab="extras" class="mobile-nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-medium text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/60">
             <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-            <span>Extras (Pace, Revision & Formulas)</span>
+            <span>Extras</span>
           </button>
           <button data-tab="settings" class="mobile-nav-btn w-full flex items-center gap-3 px-3.5 py-3 rounded-xl font-medium text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/60">
             <svg class="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -445,7 +445,7 @@
                 <span id="dashPaceValue" class="text-xl sm:text-2xl font-extrabold text-brand-600 dark:text-brand-400 mono">0.00</span>
                 <span class="text-xs text-slate-500 dark:text-slate-400 font-medium">ch / day</span>
               </div>
-              <button data-tab="extras" class="quick-nav-btn px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 transition shrink-0">
+              <button id="dashAdjustPaceBtn" data-tab="extras" class="quick-nav-btn px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 transition shrink-0">
                 Adjust Date
               </button>
             </div>
@@ -890,13 +890,269 @@
         <section id="tab-extras" class="tab-content space-y-6">
 
           <!-- Extras Header -->
-          <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm">
-            <h2 class="text-xl font-bold text-slate-900 dark:text-white">Study Extras & Exam Toolkit</h2>
-            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Adjust your syllabus pace deadline, track spaced-repetition revisions, and browse chapter-wise formulas, sections, and your personal notes.</p>
+          <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between gap-4">
+            <div>
+              <h2 class="text-xl font-bold text-slate-900 dark:text-white">Extras</h2>
+              <p id="extrasHeaderSubtitle" class="text-xs text-slate-500 dark:text-slate-400 mt-1">Select a tool below to open it in its own workspace.</p>
+            </div>
+            <button id="extrasBackToGridBtn" class="hidden px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 flex items-center gap-1.5 transition shrink-0">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+              <span>Back to Extras</span>
+            </button>
+          </div>
+
+          <!-- EXTRAS ROUNDED-SQUARE TOOL LAUNCHER GRID -->
+          <div id="extrasLauncherGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+            
+            <button type="button" data-extras-tool="recommender" class="extras-tool-card aspect-square bg-white dark:bg-slate-800 hover:border-indigo-400 dark:hover:border-indigo-500 border border-slate-200 dark:border-slate-700 rounded-3xl p-4 sm:p-5 flex flex-col items-center justify-center text-center gap-2.5 shadow-sm hover:shadow-md transition group">
+              <div class="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-2xl group-hover:scale-110 transition">🎯</div>
+              <div>
+                <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">What to Study Next</h3>
+                <span class="inline-block mt-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300">Auto Picks</span>
+              </div>
+            </button>
+
+            <button type="button" data-extras-tool="checkers" class="extras-tool-card aspect-square bg-white dark:bg-slate-800 hover:border-amber-400 dark:hover:border-amber-500 border border-slate-200 dark:border-slate-700 rounded-3xl p-4 sm:p-5 flex flex-col items-center justify-center text-center gap-2.5 shadow-sm hover:shadow-md transition group">
+              <div class="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 flex items-center justify-center text-2xl group-hover:scale-110 transition">🧮</div>
+              <div>
+                <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">Practical Checkers</h3>
+                <span class="inline-block mt-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300">Costing & FM</span>
+              </div>
+            </button>
+
+            <button type="button" data-extras-tool="pace" class="extras-tool-card aspect-square bg-white dark:bg-slate-800 hover:border-emerald-400 dark:hover:border-emerald-500 border border-slate-200 dark:border-slate-700 rounded-3xl p-4 sm:p-5 flex flex-col items-center justify-center text-center gap-2.5 shadow-sm hover:shadow-md transition group">
+              <div class="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl group-hover:scale-110 transition">⚡</div>
+              <div>
+                <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">Pace Calculator</h3>
+                <span id="extrasCardPaceBadge" class="inline-block mt-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 mono">0.00 ch/day</span>
+              </div>
+            </button>
+
+            <button type="button" data-extras-tool="revision" class="extras-tool-card aspect-square bg-white dark:bg-slate-800 hover:border-purple-400 dark:hover:border-purple-500 border border-slate-200 dark:border-slate-700 rounded-3xl p-4 sm:p-5 flex flex-col items-center justify-center text-center gap-2.5 shadow-sm hover:shadow-md transition group">
+              <div class="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400 flex items-center justify-center text-2xl group-hover:scale-110 transition">🔁</div>
+              <div>
+                <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">Revision Schedule</h3>
+                <span id="extrasCardRevBadge" class="inline-block mt-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300">0 due</span>
+              </div>
+            </button>
+
+            <button type="button" data-extras-tool="reference" class="extras-tool-card aspect-square bg-white dark:bg-slate-800 hover:border-blue-400 dark:hover:border-blue-500 border border-slate-200 dark:border-slate-700 rounded-3xl p-4 sm:p-5 flex flex-col items-center justify-center text-center gap-2.5 shadow-sm hover:shadow-md transition group col-span-2 sm:col-span-1">
+              <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center text-2xl group-hover:scale-110 transition">📖</div>
+              <div>
+                <h3 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">Formulas & Notes</h3>
+                <span class="inline-block mt-1 text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300">94 Chapters</span>
+              </div>
+            </button>
+
+          </div>
+
+          <!-- SMART RECOMMENDER: WHAT SHOULD I STUDY NEXT? -->
+          <div id="extrasWindow-recommender" class="extras-tool-window hidden bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100 dark:border-slate-700">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span>🎯 What Should I Study Next?</span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300">Auto-Prioritized</span>
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Top high-impact chapters and due revisions picked automatically from your syllabus progress—no manual sorting needed.</p>
+              </div>
+              <button id="refreshRecommenderBtn" class="px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 transition self-start sm:self-auto shrink-0">
+                Refresh Picks
+              </button>
+            </div>
+            <div id="extrasRecommenderList" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- INSTANT PRACTICAL PAPER CHECKERS (PAPER 4 COSTING & PAPER 6A FM) -->
+          <div id="extrasWindow-checkers" class="extras-tool-window hidden bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-700">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                  <span>🧮 Instant Practical Paper Checkers</span>
+                  <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300">Paper 4 & 6A</span>
+                </h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Verify intermediate Costing & Financial Management numbers in seconds while solving sums.</p>
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                <button data-calc-tab="eoq" class="calc-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-brand-600 text-white transition">EOQ & Stock</button>
+                <button data-calc-tab="bep" class="calc-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition">BEP / P/V</button>
+                <button data-calc-tab="wacc" class="calc-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition">WACC & CAPM</button>
+                <button data-calc-tab="npv" class="calc-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition">NPV & PI</button>
+              </div>
+            </div>
+
+            <!-- Calc 1: EOQ & Stock Levels -->
+            <div id="calcPanel-eoq" class="calc-panel grid grid-cols-1 lg:grid-cols-12 gap-4">
+              <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label for="calcEoqA" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Annual Demand (A)</label>
+                  <input type="number" id="calcEoqA" placeholder="e.g. 12000" class="calc-eoq-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcEoqO" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Ordering Cost (O)</label>
+                  <input type="number" id="calcEoqO" placeholder="e.g. 500" class="calc-eoq-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcEoqC" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Carrying Cost/u/yr (C)</label>
+                  <input type="number" id="calcEoqC" step="any" placeholder="e.g. 12" class="calc-eoq-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcEoqMaxC" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Max Consumption/day</label>
+                  <input type="number" id="calcEoqMaxC" placeholder="Optional" class="calc-eoq-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcEoqMaxLT" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Max Lead Time (days)</label>
+                  <input type="number" id="calcEoqMaxLT" placeholder="Optional" class="calc-eoq-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcEoqAvgLT" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Avg Cons / Avg LT</label>
+                  <div class="grid grid-cols-2 gap-1.5">
+                    <input type="number" id="calcEoqAvgC" placeholder="Avg C" class="calc-eoq-input w-full px-2 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                    <input type="number" id="calcEoqAvgLT" placeholder="Avg LT" class="calc-eoq-input w-full px-2 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                  </div>
+                </div>
+              </div>
+              <div class="lg:col-span-5 p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 grid grid-cols-2 gap-3 text-xs">
+                <div>
+                  <span class="text-[11px] text-slate-400 block">EOQ (Units)</span>
+                  <span id="resEoqVal" class="text-lg font-extrabold text-brand-600 dark:text-brand-400 mono">--</span>
+                </div>
+                <div>
+                  <span class="text-[11px] text-slate-400 block">Orders / Year</span>
+                  <span id="resEoqOrders" class="text-lg font-extrabold text-slate-800 dark:text-white mono">--</span>
+                </div>
+                <div>
+                  <span class="text-[11px] text-slate-400 block">Reorder Level (ROL)</span>
+                  <span id="resEoqRol" class="text-sm font-bold text-slate-800 dark:text-white mono">--</span>
+                </div>
+                <div>
+                  <span class="text-[11px] text-slate-400 block">Min Stock Level</span>
+                  <span id="resEoqMin" class="text-sm font-bold text-slate-800 dark:text-white mono">--</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Calc 2: Marginal Costing / BEP -->
+            <div id="calcPanel-bep" class="calc-panel hidden grid grid-cols-1 lg:grid-cols-12 gap-4">
+              <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label for="calcBepSP" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Selling Price / Unit (₹)</label>
+                  <input type="number" id="calcBepSP" step="any" placeholder="e.g. 100" class="calc-bep-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcBepVC" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Variable Cost / Unit (₹)</label>
+                  <input type="number" id="calcBepVC" step="any" placeholder="e.g. 60" class="calc-bep-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcBepFC" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Total Fixed Cost (₹)</label>
+                  <input type="number" id="calcBepFC" step="any" placeholder="e.g. 200000" class="calc-bep-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcBepSales" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Actual Sales Units (Optional)</label>
+                  <input type="number" id="calcBepSales" placeholder="e.g. 8000" class="calc-bep-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+              </div>
+              <div class="lg:col-span-5 p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 grid grid-cols-2 gap-3 text-xs">
+                <div>
+                  <span class="text-[11px] text-slate-400 block">P/V Ratio</span>
+                  <span id="resBepPv" class="text-lg font-extrabold text-brand-600 dark:text-brand-400 mono">--</span>
+                </div>
+                <div>
+                  <span class="text-[11px] text-slate-400 block">BEP (Units)</span>
+                  <span id="resBepUnits" class="text-lg font-extrabold text-slate-800 dark:text-white mono">--</span>
+                </div>
+                <div>
+                  <span class="text-[11px] text-slate-400 block">BEP (₹ Value)</span>
+                  <span id="resBepValue" class="text-sm font-bold text-slate-800 dark:text-white mono">--</span>
+                </div>
+                <div>
+                  <span class="text-[11px] text-slate-400 block">MOS / Profit</span>
+                  <span id="resBepMos" class="text-sm font-bold text-emerald-600 dark:text-emerald-400 mono">--</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Calc 3: WACC & CAPM -->
+            <div id="calcPanel-wacc" class="calc-panel hidden grid grid-cols-1 lg:grid-cols-12 gap-4">
+              <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                  <label for="calcWaccRf" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Risk-Free Rf (%)</label>
+                  <input type="number" id="calcWaccRf" step="any" placeholder="e.g. 6" class="calc-wacc-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcWaccBeta" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Beta (β)</label>
+                  <input type="number" id="calcWaccBeta" step="any" placeholder="e.g. 1.2" class="calc-wacc-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcWaccRm" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Market Return Rm (%)</label>
+                  <input type="number" id="calcWaccRm" step="any" placeholder="e.g. 14" class="calc-wacc-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcWaccKd" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">After-Tax Kd (%)</label>
+                  <input type="number" id="calcWaccKd" step="any" placeholder="e.g. 8" class="calc-wacc-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcWaccWe" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Equity Value / Wt</label>
+                  <input type="number" id="calcWaccWe" step="any" placeholder="e.g. 60" class="calc-wacc-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcWaccWd" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Debt Value / Wt</label>
+                  <input type="number" id="calcWaccWd" step="any" placeholder="e.g. 40" class="calc-wacc-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+              </div>
+              <div class="lg:col-span-5 p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 grid grid-cols-2 gap-3 text-xs">
+                <div>
+                  <span class="text-[11px] text-slate-400 block">Cost of Equity (Ke)</span>
+                  <span id="resWaccKe" class="text-lg font-extrabold text-indigo-600 dark:text-indigo-400 mono">--</span>
+                </div>
+                <div>
+                  <span class="text-[11px] text-slate-400 block">WACC (Ko)</span>
+                  <span id="resWaccKo" class="text-lg font-extrabold text-brand-600 dark:text-brand-400 mono">--</span>
+                </div>
+                <div class="col-span-2 text-[11px] text-slate-400">
+                  Formula: Ke = Rf + β(Rm − Rf); Ko = (Ke·We + Kd·Wd) / (We + Wd)
+                </div>
+              </div>
+            </div>
+
+            <!-- Calc 4: NPV & Profitability Index -->
+            <div id="calcPanel-npv" class="calc-panel hidden grid grid-cols-1 lg:grid-cols-12 gap-4">
+              <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label for="calcNpvOutflow" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Initial Outflow (₹)</label>
+                  <input type="number" id="calcNpvOutflow" step="any" placeholder="e.g. 100000" class="calc-npv-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div>
+                  <label for="calcNpvRate" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Discount Rate (%)</label>
+                  <input type="number" id="calcNpvRate" step="any" placeholder="e.g. 12" class="calc-npv-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+                <div class="sm:col-span-2">
+                  <label for="calcNpvInflows" class="block text-[11px] font-semibold text-slate-500 dark:text-slate-400 mb-1">Annual Cash Inflows (comma-separated, Yr 1, Yr 2, ...)</label>
+                  <input type="text" id="calcNpvInflows" placeholder="e.g. 40000, 50000, 60000" class="calc-npv-input w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200">
+                </div>
+              </div>
+              <div class="lg:col-span-5 p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 grid grid-cols-2 gap-3 text-xs">
+                <div>
+                  <span class="text-[11px] text-slate-400 block">PV of Inflows</span>
+                  <span id="resNpvPv" class="text-sm font-bold text-slate-800 dark:text-white mono">--</span>
+                </div>
+                <div>
+                  <span class="text-[11px] text-slate-400 block">Profitability Index</span>
+                  <span id="resNpvPi" class="text-sm font-bold text-slate-800 dark:text-white mono">--</span>
+                </div>
+                <div class="col-span-2">
+                  <span class="text-[11px] text-slate-400 block">Net Present Value (NPV)</span>
+                  <span id="resNpvVal" class="text-lg font-extrabold text-brand-600 dark:text-brand-400 mono">--</span>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <!-- A. SMART PACE CALCULATOR -->
-          <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+          <div id="extrasWindow-pace" class="extras-tool-window hidden bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-700">
               <div>
                 <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
@@ -937,7 +1193,7 @@
           </div>
 
           <!-- B. SPACED-REPETITION REVISION SCHEDULE -->
-          <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+          <div id="extrasWindow-revision" class="extras-tool-window hidden bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
             <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-700">
               <div>
                 <div class="flex items-center gap-2">
@@ -959,7 +1215,7 @@
           </div>
 
           <!-- C. ICAI FORMULAS, SECTIONS, IMPORTANT TOPICS & PERSONAL NOTES BANK -->
-          <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+          <div id="extrasWindow-reference" class="extras-tool-window hidden bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
             <div class="pb-3 border-b border-slate-100 dark:border-slate-700">
               <h3 class="text-base font-bold text-slate-900 dark:text-white">📖 ICAI Formulas, Sections, Key Topics & Personal Notes</h3>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Classified by subject and chapter across all 6 CA Intermediate papers. Edit your own chapter notes directly below.</p>
@@ -2652,6 +2908,8 @@
       document.getElementById('extrasPaceDaysLeft').textContent = pace.diffDays;
       document.getElementById('extrasPacePerDay').textContent = pace.perDay;
       document.getElementById('extrasPacePerWeek').textContent = `(${pace.perWeek}/wk)`;
+      const cardPaceBadge = document.getElementById('extrasCardPaceBadge');
+      if (cardPaceBadge) cardPaceBadge.textContent = `${pace.perDay} ch/day`;
 
       // 2. Spaced-Repetition Revision Queue (No auto tasks, synced to Subject Tracker revisionStatus)
       const completedItems = [];
@@ -2671,6 +2929,9 @@
       document.getElementById('revFilterCountAll').textContent = completedItems.length;
       document.getElementById('revFilterCountDue').textContent = dueCount;
       document.getElementById('revFilterCountUpcoming').textContent = upcomingCount;
+
+      const cardRevBadge = document.getElementById('extrasCardRevBadge');
+      if (cardRevBadge) cardRevBadge.textContent = `${dueCount} due`;
 
       const badge = document.getElementById('sidebarRevisionDueBadge');
       if (badge) {
@@ -2742,8 +3003,130 @@
         });
       }
 
-      // 3. Reference Bank
+      // 3. Smart Recommender ("What Should I Study Next?")
+      renderSmartRecommender(stats);
+
+      // 4. Reference Bank
       renderExtrasReferenceBank();
+    }
+
+    function renderSmartRecommender(stats) {
+      const listEl = document.getElementById('extrasRecommenderList');
+      if (!listEl) return;
+      listEl.innerHTML = '';
+
+      const picks = [];
+      const todayStr = new Date().toISOString().split('T')[0];
+
+      // Priority 1: Revisions due today/overdue
+      SYLLABUS.forEach(subj => {
+        subj.chapters.forEach(ch => {
+          const chState = appChapters[ch.id];
+          if (chState && chState.completed) {
+            const info = getRevisionStageInfo(chState);
+            if (info.nextStage && info.isDue) {
+              picks.push({
+                type: 'REVISION',
+                score: 100,
+                subj,
+                ch,
+                reason: `${info.nextStage} Due`,
+                info
+              });
+            }
+          }
+        });
+      });
+
+      // Priority 2: Pending High-Weightage chapters in lowest-completion subjects
+      const sortedSubjIds = Object.keys(stats.subjectStats).sort(
+        (a, b) => stats.subjectStats[a].percentage - stats.subjectStats[b].percentage
+      );
+
+      sortedSubjIds.forEach((sid, sIdx) => {
+        const subj = SYLLABUS.find(s => s.id === sid);
+        const sPct = stats.subjectStats[sid].percentage;
+        subj.chapters.forEach(ch => {
+          const chState = appChapters[ch.id];
+          if (!chState || !chState.completed) {
+            const alreadyPendingTask = appTasks.some(t => !t.completed && t.chapterId === ch.id);
+            const weightScore = ch.weightage === 'High' ? 40 : (ch.weightage === 'Medium' ? 20 : 5);
+            const subjUrgency = (6 - sIdx) * 10;
+            const taskBonus = alreadyPendingTask ? -15 : 10;
+            picks.push({
+              type: 'CHAPTER',
+              score: weightScore + subjUrgency + taskBonus,
+              subj,
+              ch,
+              reason: `${subj.code} (${sPct}%) • ${ch.weightage} Priority`,
+              alreadyScheduled: alreadyPendingTask
+            });
+          }
+        });
+      });
+
+      picks.sort((a, b) => b.score - a.score);
+      const topPicks = picks.slice(0, 3);
+
+      if (topPicks.length === 0) {
+        listEl.innerHTML = '<div class="md:col-span-3 py-6 text-center text-xs text-emerald-600 font-semibold">All 94 chapters are completed and up to date on revisions!</div>';
+        return;
+      }
+
+      topPicks.forEach(pick => {
+        const card = document.createElement('div');
+        card.className = 'p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 flex flex-col justify-between gap-3 text-xs';
+
+        if (pick.type === 'REVISION') {
+          card.innerHTML = `
+            <div>
+              <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300 mb-2">${pick.reason}</span>
+              <h4 class="font-bold text-slate-900 dark:text-white leading-snug">${pick.ch.name}</h4>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">${pick.subj.code}: ${pick.subj.name}</p>
+            </div>
+            <button class="rec-rev-btn w-full py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-semibold transition">
+              Mark ${pick.info.nextStage} Done
+            </button>
+          `;
+          card.querySelector('.rec-rev-btn').addEventListener('click', () => {
+            setChapterRevisionStatus(pick.ch.id, pick.info.nextStage);
+          });
+        } else {
+          card.innerHTML = `
+            <div>
+              <span class="inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-950/60 dark:text-indigo-300 mb-2">${pick.reason}</span>
+              <h4 class="font-bold text-slate-900 dark:text-white leading-snug">${pick.ch.name}</h4>
+              <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">${pick.subj.name}</p>
+            </div>
+            <button class="rec-sched-btn w-full py-2 rounded-xl font-semibold transition ${
+              pick.alreadyScheduled
+                ? 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 cursor-default'
+                : 'bg-brand-600 hover:bg-brand-700 text-white shadow-sm'
+            }">
+              ${pick.alreadyScheduled ? 'Already in Pending Tasks' : '+ Schedule for Today'}
+            </button>
+          `;
+          if (!pick.alreadyScheduled) {
+            card.querySelector('.rec-sched-btn').addEventListener('click', () => {
+              appTasks.push({
+                id: 'task_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                title: `Study: ${pick.ch.name}`,
+                subjectId: pick.subj.id,
+                chapterId: pick.ch.id,
+                dueDate: todayStr,
+                priority: pick.ch.weightage || 'Medium',
+                description: 'Auto-scheduled from Smart Recommender.',
+                completed: false,
+                completedDate: null
+              });
+              saveState();
+              refreshAllViews();
+              showToast(`Scheduled "${pick.ch.name}" for today!`, 'success');
+            });
+          }
+        }
+        listEl.appendChild(card);
+      });
     }
 
     function populateExtrasChapterFilter() {
@@ -3329,6 +3712,54 @@
       document.getElementById('settingExamDate').focus();
     });
 
+    // Extras Tool Window Navigation
+    function openExtrasTool(toolKey) {
+      const grid = document.getElementById('extrasLauncherGrid');
+      const backBtn = document.getElementById('extrasBackToGridBtn');
+      const subtitle = document.getElementById('extrasHeaderSubtitle');
+      if (grid) grid.classList.add('hidden');
+      if (backBtn) backBtn.classList.remove('hidden');
+
+      document.querySelectorAll('.extras-tool-window').forEach(w => w.classList.add('hidden'));
+      document.getElementById(`extrasWindow-${toolKey}`)?.classList.remove('hidden');
+
+      const titles = {
+        recommender: 'What Should I Study Next?',
+        checkers: 'Instant Practical Paper Checkers',
+        pace: 'Smart Pace Calculator',
+        revision: 'Spaced-Repetition Revision Schedule',
+        reference: 'ICAI Formulas, Sections & Personal Notes'
+      };
+      if (subtitle) subtitle.textContent = titles[toolKey] || '';
+    }
+
+    function showExtrasLauncherGrid() {
+      const grid = document.getElementById('extrasLauncherGrid');
+      const backBtn = document.getElementById('extrasBackToGridBtn');
+      const subtitle = document.getElementById('extrasHeaderSubtitle');
+      document.querySelectorAll('.extras-tool-window').forEach(w => w.classList.add('hidden'));
+      if (grid) grid.classList.remove('hidden');
+      if (backBtn) backBtn.classList.add('hidden');
+      if (subtitle) subtitle.textContent = 'Select a tool below to open it in its own workspace.';
+    }
+
+    document.querySelectorAll('.extras-tool-card').forEach(card => {
+      card.addEventListener('click', () => {
+        openExtrasTool(card.getAttribute('data-extras-tool'));
+      });
+    });
+
+    document.getElementById('extrasBackToGridBtn').addEventListener('click', showExtrasLauncherGrid);
+
+    document.getElementById('dashAdjustPaceBtn').addEventListener('click', () => {
+      openExtrasTool('pace');
+    });
+
+    // Reset Extras to rounded-square grid when clicking Extras nav links
+    document.querySelectorAll('.nav-btn[data-tab="extras"], .mobile-nav-btn[data-tab="extras"], .mobile-bottom-btn[data-tab="extras"]').forEach(btn => {
+      btn.addEventListener('click', showExtrasLauncherGrid);
+    });
+
     // Extras Event Listeners
     document.getElementById('paceTargetDateInput').addEventListener('change', (e) => {
       if (e.target.value) {
@@ -3356,6 +3787,139 @@
     });
     document.getElementById('extrasRefChapterFilter').addEventListener('change', renderExtrasReferenceBank);
     document.getElementById('extrasRefSearchInput').addEventListener('input', renderExtrasReferenceBank);
+
+    document.getElementById('refreshRecommenderBtn').addEventListener('click', () => {
+      renderSmartRecommender(calculateStatistics());
+      showToast('Study recommendations refreshed.', 'info');
+    });
+
+    // Practical Paper Checkers (Tab switching & Live Calculations)
+    document.querySelectorAll('.calc-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.calc-tab-btn').forEach(b => {
+          b.className = 'calc-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition';
+        });
+        btn.className = 'calc-tab-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-brand-600 text-white transition';
+        const target = btn.getAttribute('data-calc-tab');
+        document.querySelectorAll('.calc-panel').forEach(p => p.classList.add('hidden'));
+        document.getElementById(`calcPanel-${target}`)?.classList.remove('hidden');
+      });
+    });
+
+    function runEoqCalc() {
+      const A = parseFloat(document.getElementById('calcEoqA').value);
+      const O = parseFloat(document.getElementById('calcEoqO').value);
+      const C = parseFloat(document.getElementById('calcEoqC').value);
+      const maxC = parseFloat(document.getElementById('calcEoqMaxC').value);
+      const maxLT = parseFloat(document.getElementById('calcEoqMaxLT').value);
+      const avgC = parseFloat(document.getElementById('calcEoqAvgC').value);
+      const avgLT = parseFloat(document.getElementById('calcEoqAvgLT').value);
+
+      if (A > 0 && O > 0 && C > 0) {
+        const eoq = Math.sqrt((2 * A * O) / C);
+        document.getElementById('resEoqVal').textContent = eoq.toFixed(2);
+        document.getElementById('resEoqOrders').textContent = (A / eoq).toFixed(2);
+      } else {
+        document.getElementById('resEoqVal').textContent = '--';
+        document.getElementById('resEoqOrders').textContent = '--';
+      }
+
+      if (maxC > 0 && maxLT > 0) {
+        const rol = maxC * maxLT;
+        document.getElementById('resEoqRol').textContent = rol.toFixed(0) + ' u';
+        if (avgC > 0 && avgLT > 0) {
+          document.getElementById('resEoqMin').textContent = (rol - avgC * avgLT).toFixed(0) + ' u';
+        } else {
+          document.getElementById('resEoqMin').textContent = '--';
+        }
+      } else {
+        document.getElementById('resEoqRol').textContent = '--';
+        document.getElementById('resEoqMin').textContent = '--';
+      }
+    }
+    document.querySelectorAll('.calc-eoq-input').forEach(el => el.addEventListener('input', runEoqCalc));
+
+    function runBepCalc() {
+      const sp = parseFloat(document.getElementById('calcBepSP').value);
+      const vc = parseFloat(document.getElementById('calcBepVC').value);
+      const fc = parseFloat(document.getElementById('calcBepFC').value);
+      const sales = parseFloat(document.getElementById('calcBepSales').value);
+
+      if (sp > 0 && !isNaN(vc) && sp > vc) {
+        const contrib = sp - vc;
+        const pv = (contrib / sp) * 100;
+        document.getElementById('resBepPv').textContent = pv.toFixed(2) + '%';
+        if (fc >= 0) {
+          const bepUnits = fc / contrib;
+          const bepVal = fc / (pv / 100);
+          document.getElementById('resBepUnits').textContent = Math.ceil(bepUnits).toLocaleString('en-IN');
+          document.getElementById('resBepValue').textContent = '₹' + Math.round(bepVal).toLocaleString('en-IN');
+          if (sales > 0) {
+            const profit = sales * contrib - fc;
+            document.getElementById('resBepMos').textContent = `${(sales - bepUnits).toFixed(0)} u / ₹${Math.round(profit).toLocaleString('en-IN')}`;
+          } else {
+            document.getElementById('resBepMos').textContent = '--';
+          }
+        }
+      } else {
+        document.getElementById('resBepPv').textContent = '--';
+        document.getElementById('resBepUnits').textContent = '--';
+        document.getElementById('resBepValue').textContent = '--';
+        document.getElementById('resBepMos').textContent = '--';
+      }
+    }
+    document.querySelectorAll('.calc-bep-input').forEach(el => el.addEventListener('input', runBepCalc));
+
+    function runWaccCalc() {
+      const rf = parseFloat(document.getElementById('calcWaccRf').value);
+      const beta = parseFloat(document.getElementById('calcWaccBeta').value);
+      const rm = parseFloat(document.getElementById('calcWaccRm').value);
+      const kd = parseFloat(document.getElementById('calcWaccKd').value);
+      const we = parseFloat(document.getElementById('calcWaccWe').value);
+      const wd = parseFloat(document.getElementById('calcWaccWd').value);
+
+      if (!isNaN(rf) && !isNaN(beta) && !isNaN(rm)) {
+        const ke = rf + beta * (rm - rf);
+        document.getElementById('resWaccKe').textContent = ke.toFixed(2) + '%';
+        if (!isNaN(kd) && we >= 0 && wd >= 0 && (we + wd) > 0) {
+          const ko = (ke * we + kd * wd) / (we + wd);
+          document.getElementById('resWaccKo').textContent = ko.toFixed(2) + '%';
+        } else {
+          document.getElementById('resWaccKo').textContent = '--';
+        }
+      } else {
+        document.getElementById('resWaccKe').textContent = '--';
+        document.getElementById('resWaccKo').textContent = '--';
+      }
+    }
+    document.querySelectorAll('.calc-wacc-input').forEach(el => el.addEventListener('input', runWaccCalc));
+
+    function runNpvCalc() {
+      const outflow = parseFloat(document.getElementById('calcNpvOutflow').value);
+      const rate = parseFloat(document.getElementById('calcNpvRate').value);
+      const inflowsRaw = document.getElementById('calcNpvInflows').value;
+
+      if (outflow > 0 && !isNaN(rate) && inflowsRaw.trim()) {
+        const inflows = inflowsRaw.split(',').map(s => parseFloat(s.trim())).filter(n => !isNaN(n));
+        if (inflows.length > 0) {
+          let pv = 0;
+          const r = rate / 100;
+          inflows.forEach((cf, idx) => {
+            pv += cf / Math.pow(1 + r, idx + 1);
+          });
+          const npv = pv - outflow;
+          const pi = pv / outflow;
+          document.getElementById('resNpvPv').textContent = '₹' + Math.round(pv).toLocaleString('en-IN');
+          document.getElementById('resNpvPi').textContent = pi.toFixed(3);
+          document.getElementById('resNpvVal').textContent = `${npv >= 0 ? '+' : '-'}₹${Math.abs(Math.round(npv)).toLocaleString('en-IN')}`;
+          return;
+        }
+      }
+      document.getElementById('resNpvPv').textContent = '--';
+      document.getElementById('resNpvPi').textContent = '--';
+      document.getElementById('resNpvVal').textContent = '--';
+    }
+    document.querySelectorAll('.calc-npv-input').forEach(el => el.addEventListener('input', runNpvCalc));
 
     // Save Settings
     document.getElementById('saveGoalSettingsBtn').addEventListener('click', () => {
