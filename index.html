@@ -887,6 +887,17 @@
                 </div>
               </div>
 
+              <div class="pt-2 border-t border-slate-100 dark:border-slate-700">
+                <label for="settingThemeMode" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Appearance & Theme Mode</label>
+                <select id="settingThemeMode" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
+                  <option value="auto">Auto Night Mode (Dark from 7:00 PM to 6:00 AM)</option>
+                  <option value="system">Sync with Device Mode (Follow OS Light/Dark)</option>
+                  <option value="light">Always Light Mode</option>
+                  <option value="dark">Always Dark Mode</option>
+                </select>
+                <p id="settingThemeStatusHint" class="text-[11px] text-slate-400 mt-1">Automatically adapts theme based on your selection.</p>
+              </div>
+
               <button id="saveGoalSettingsBtn" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl text-xs font-semibold shadow-sm transition">
                 Save Preferences
               </button>
@@ -969,12 +980,12 @@
   <!-- ========================================== -->
   <!-- MODAL: TASK CREATION / EDITING -->
   <!-- ========================================== -->
-  <div id="taskModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white dark:bg-slate-800 rounded-2xl w-full max-w-lg p-6 shadow-2xl border border-slate-200 dark:border-slate-700 animate-in fade-in duration-150">
+  <div id="taskModal" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-t-2xl sm:rounded-2xl w-full max-w-lg max-h-[92vh] overflow-y-auto p-5 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-700 animate-in fade-in duration-150">
       
-      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-700 mb-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-700 mb-4 sticky top-0 bg-white dark:bg-slate-800 z-10">
         <h3 id="taskModalHeading" class="text-base font-bold text-slate-900 dark:text-white">Create New Study Task</h3>
-        <button id="closeTaskModalBtn" aria-label="Close task modal" class="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg">
+        <button id="closeTaskModalBtn" aria-label="Close task modal" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700 transition">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
       </div>
@@ -984,8 +995,8 @@
 
         <!-- Subject Selector -->
         <div>
-          <label for="taskFormSubject" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Subject <span class="text-rose-500">*</span></label>
-          <select id="taskFormSubject" required class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
+          <label for="taskFormSubject" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">Subject <span class="text-rose-500">*</span></label>
+          <select id="taskFormSubject" required class="w-full px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
             <option value="">-- Choose Subject --</option>
             <option value="p1">Paper 1: Advanced Accounting</option>
             <option value="p2">Paper 2: Corporate and Other Laws</option>
@@ -998,47 +1009,38 @@
 
         <!-- Chapter Selector -->
         <div>
-          <label for="taskFormChapter" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Corresponding Chapter / Topic</label>
-          <select id="taskFormChapter" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
+          <label for="taskFormChapter" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">Corresponding Chapter / Topic</label>
+          <select id="taskFormChapter" class="w-full px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
             <option value="">-- Select Chapter (Syncs with Subject Tracker) --</option>
           </select>
-          <p class="text-[11px] text-slate-400 mt-1">Completing this task will automatically mark this chapter completed in Subject Tracker.</p>
+          <p class="text-[11px] text-slate-400 mt-1.5">Completing this task will automatically mark this chapter completed in Subject Tracker.</p>
         </div>
 
         <!-- Task Title -->
         <div>
-          <label for="taskFormTitle" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Task Title <span class="text-rose-500">*</span></label>
-          <input type="text" id="taskFormTitle" required placeholder="e.g. Read Chapter 2 & solve illustrations" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
+          <label for="taskFormTitle" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">Task Title <span class="text-rose-500">*</span></label>
+          <input type="text" id="taskFormTitle" required placeholder="e.g. Read Chapter 2 & solve illustrations" class="w-full px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
         </div>
 
-        <!-- Due Date & Priority Grid -->
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label for="taskFormDueDate" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Due Date <span class="text-rose-500">*</span></label>
-            <input type="date" id="taskFormDueDate" required class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
-          </div>
-          <div>
-            <label for="taskFormPriority" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Priority</label>
-            <select id="taskFormPriority" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
-              <option value="High">High Priority</option>
-              <option value="Medium" selected>Medium Priority</option>
-              <option value="Low">Low Priority</option>
-            </select>
-          </div>
+        <!-- Due Date (Priority auto-synced from Subject Tracker chapter weightage) -->
+        <div>
+          <label for="taskFormDueDate" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">Due Date <span class="text-rose-500">*</span></label>
+          <input type="date" id="taskFormDueDate" required class="w-full px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
+          <p class="text-[11px] text-slate-400 mt-1.5">Priority is automatically synced from the selected chapter in Subject Tracker.</p>
         </div>
 
         <!-- Description / Notes -->
         <div>
-          <label for="taskFormDescription" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Description & Instructions (Optional)</label>
-          <textarea id="taskFormDescription" rows="2" placeholder="Specific questions, ICAI module pages, or doubts to review..." class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200"></textarea>
+          <label for="taskFormDescription" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">Description & Instructions (Optional)</label>
+          <textarea id="taskFormDescription" rows="2" placeholder="Specific questions, ICAI module pages, or doubts to review..." class="w-full px-3.5 py-2.5 sm:py-2 text-sm sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200"></textarea>
         </div>
 
-        <!-- Buttons -->
-        <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-100 dark:border-slate-700">
-          <button type="button" id="cancelTaskModalBtn" class="px-4 py-2 text-xs font-semibold rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">
+        <!-- Buttons (Full-width stacked on mobile, right-aligned on desktop) -->
+        <div class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-2.5 sm:gap-3 pt-3 border-t border-slate-100 dark:border-slate-700">
+          <button type="button" id="cancelTaskModalBtn" class="w-full sm:w-auto px-4 py-2.5 sm:py-2 text-xs font-semibold rounded-xl bg-slate-100 sm:bg-transparent dark:bg-slate-700 sm:dark:bg-transparent text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
             Cancel
           </button>
-          <button type="submit" id="saveTaskSubmitBtn" class="px-5 py-2 text-xs font-semibold rounded-xl bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition">
+          <button type="submit" id="saveTaskSubmitBtn" class="w-full sm:w-auto px-5 py-2.5 sm:py-2 text-xs font-semibold rounded-xl bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition">
             Save Task
           </button>
         </div>
@@ -1178,7 +1180,8 @@
       examDate: '2027-01-02',
       dailyTasks: 3,
       dailyHours: 4.0,
-      theme: 'light'
+      theme: 'light',
+      themeMode: 'auto'
     };
 
     // State Variables (Initialized completely empty/nil)
@@ -1813,6 +1816,7 @@
         const meta = task.chapterId ? getChapterMeta(task.chapterId) : null;
         const subjName = meta ? meta.subject.name : (task.subjectId ? task.subjectId.toUpperCase() : 'General Topic');
         const chapterTitle = meta ? meta.chapter.name : null;
+        const effectivePriority = (meta && meta.chapter.weightage) ? meta.chapter.weightage : (task.priority || 'Medium');
 
         card.innerHTML = `
           <div class="flex items-start justify-between gap-3">
@@ -1824,11 +1828,11 @@
                     ${task.title}
                   </span>
                   <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                    task.priority === 'High' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-400' :
-                    task.priority === 'Medium' ? 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400' :
+                    effectivePriority === 'High' ? 'bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-400' :
+                    effectivePriority === 'Medium' ? 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400' :
                     'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
                   }">
-                    ${task.priority}
+                    ${effectivePriority}
                   </span>
                   ${
                     isOverdue 
@@ -2397,7 +2401,6 @@
       document.getElementById('taskFormTitle').value = defaults.title || '';
       document.getElementById('taskFormSubject').value = defaults.subjectId || '';
       document.getElementById('taskFormDueDate').value = defaults.dueDate || currentSelectedCalendarDate || new Date().toISOString().split('T')[0];
-      document.getElementById('taskFormPriority').value = defaults.priority || 'Medium';
       document.getElementById('taskFormDescription').value = defaults.description || '';
 
       populateChapterDropdown(defaults.subjectId || '', defaults.chapterId || '');
@@ -2411,7 +2414,6 @@
       document.getElementById('taskFormTitle').value = task.title;
       document.getElementById('taskFormSubject').value = task.subjectId;
       document.getElementById('taskFormDueDate').value = task.dueDate;
-      document.getElementById('taskFormPriority').value = task.priority;
       document.getElementById('taskFormDescription').value = task.description || '';
 
       populateChapterDropdown(task.subjectId, task.chapterId);
@@ -2445,7 +2447,8 @@
       const subjectId = document.getElementById('taskFormSubject').value;
       const chapterId = document.getElementById('taskFormChapter').value;
       const dueDate = document.getElementById('taskFormDueDate').value;
-      const priority = document.getElementById('taskFormPriority').value;
+      const chapterMeta = chapterId ? getChapterMeta(chapterId) : null;
+      const priority = (chapterMeta && chapterMeta.chapter.weightage) ? chapterMeta.chapter.weightage : 'Medium';
       const description = document.getElementById('taskFormDescription').value.trim();
 
       if (!title || !subjectId || !dueDate) {
@@ -2795,22 +2798,80 @@
       renderCalendar();
     });
 
-    // Theme Toggle
-    function applyTheme(isDark) {
-      if (isDark) {
+    // Theme Management: Auto Night Mode (7 PM - 6 AM), Device Sync, or Manual
+    const systemDarkMediaQuery = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+    function isNightTimeNow() {
+      const hour = new Date().getHours();
+      return hour >= 19 || hour < 6;
+    }
+
+    function applyEffectiveTheme(shouldSave = false) {
+      const mode = appSettings.themeMode || 'auto';
+      let useDark = false;
+      let statusHint = '';
+
+      if (mode === 'auto') {
+        useDark = isNightTimeNow();
+        statusHint = useDark
+          ? 'Auto Night Mode active: Dark theme is on (7:00 PM – 6:00 AM).'
+          : 'Auto Night Mode active: Light theme is on (6:00 AM – 7:00 PM).';
+      } else if (mode === 'system') {
+        useDark = systemDarkMediaQuery ? systemDarkMediaQuery.matches : false;
+        statusHint = `Synced with device mode: Currently ${useDark ? 'Dark' : 'Light'}.`;
+      } else if (mode === 'dark') {
+        useDark = true;
+        statusHint = 'Manual Dark Mode enabled.';
+      } else {
+        useDark = false;
+        statusHint = 'Manual Light Mode enabled.';
+      }
+
+      if (useDark) {
         document.documentElement.classList.add('dark');
         appSettings.theme = 'dark';
       } else {
         document.documentElement.classList.remove('dark');
         appSettings.theme = 'light';
       }
-      saveState();
+
+      const modeSelect = document.getElementById('settingThemeMode');
+      if (modeSelect) modeSelect.value = mode;
+      const hintEl = document.getElementById('settingThemeStatusHint');
+      if (hintEl) hintEl.textContent = statusHint;
+
+      if (shouldSave) saveState();
     }
 
+    // Header manual toggle switches between explicit light/dark
     document.getElementById('themeToggleBtn').addEventListener('click', () => {
-      const isDark = document.documentElement.classList.contains('dark');
-      applyTheme(!isDark);
+      const isCurrentlyDark = document.documentElement.classList.contains('dark');
+      appSettings.themeMode = isCurrentlyDark ? 'light' : 'dark';
+      applyEffectiveTheme(true);
+      showToast(`Switched to ${appSettings.themeMode === 'dark' ? 'Dark' : 'Light'} Mode.`, 'info');
     });
+
+    // Instant live preview when user changes theme mode in Settings
+    document.getElementById('settingThemeMode').addEventListener('change', (e) => {
+      appSettings.themeMode = e.target.value;
+      applyEffectiveTheme(true);
+      const labelMap = {
+        auto: 'Auto Night Mode enabled (Dark 7 PM – 6 AM)',
+        system: 'Synced with your device theme',
+        light: 'Light Mode enabled',
+        dark: 'Dark Mode enabled'
+      };
+      showToast(labelMap[appSettings.themeMode] || 'Theme updated.', 'success');
+    });
+
+    // Listen for live OS/device theme changes when in 'system' mode
+    if (systemDarkMediaQuery && systemDarkMediaQuery.addEventListener) {
+      systemDarkMediaQuery.addEventListener('change', () => {
+        if (appSettings.themeMode === 'system') {
+          applyEffectiveTheme(false);
+        }
+      });
+    }
 
     // Sidebar quick bookmarks / notes buttons
     document.getElementById('sidebarBookmarksBtn').addEventListener('click', () => {
@@ -2834,8 +2895,9 @@
       appSettings.examDate = document.getElementById('settingExamDate').value || '2027-01-02';
       appSettings.dailyTasks = parseInt(document.getElementById('settingDailyTasks').value) || 3;
       appSettings.dailyHours = parseFloat(document.getElementById('settingDailyHours').value) || 4.0;
+      appSettings.themeMode = document.getElementById('settingThemeMode').value || 'auto';
 
-      saveState();
+      applyEffectiveTheme(true);
       refreshAllViews();
       showToast('Preferences updated successfully.', 'success');
     });
@@ -2927,12 +2989,21 @@
       document.getElementById('settingExamDate').value = appSettings.examDate || '2027-01-02';
       document.getElementById('settingDailyTasks').value = appSettings.dailyTasks || 3;
       document.getElementById('settingDailyHours').value = appSettings.dailyHours || 4.0;
+      document.getElementById('settingThemeMode').value = appSettings.themeMode || 'auto';
+
+      // Apply auto night mode or synced device theme immediately
+      applyEffectiveTheme(false);
 
       // Render fresh clean view with NIL progress
       refreshAllViews();
 
-      // Live Exam countdown ticker (every minute)
-      setInterval(updateExamCountdown, 60000);
+      // Live Exam countdown & Auto Night Mode ticker (every minute)
+      setInterval(() => {
+        updateExamCountdown();
+        if (appSettings.themeMode === 'auto') {
+          applyEffectiveTheme(false);
+        }
+      }, 60000);
     });
 
   </script>
