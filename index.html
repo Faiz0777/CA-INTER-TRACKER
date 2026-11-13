@@ -164,6 +164,24 @@
     .drawer-clip-open {
       animation: drawerClipReveal 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
+    html, body, main {
+      overscroll-behavior: none;
+      overscroll-behavior-y: none;
+    }
+    @keyframes spotlightBlinkRing {
+      0%, 100% {
+        box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.9), 0 0 0 6px rgba(79, 70, 229, 0.28);
+      }
+      50% {
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25), 0 0 0 10px rgba(79, 70, 229, 0);
+      }
+    }
+    .spotlight-blink-target {
+      border-radius: 0.75rem;
+      outline: 2px solid #4f46e5 !important;
+      outline-offset: 2px;
+      animation: spotlightBlinkRing 0.65s ease-in-out infinite;
+    }
     input[type="date"] {
       display: flex;
       align-items: center;
@@ -172,6 +190,33 @@
     input[type="date"]::-webkit-date-and-time-value {
       text-align: left;
       margin: 0;
+    }
+    @keyframes tourPulseRing {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.7); }
+      50% { box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); }
+    }
+    .tour-highlight-target {
+      position: relative;
+      z-index: 65 !important;
+      outline: 2px solid #4f46e5 !important;
+      outline-offset: 2px;
+      animation: tourPulseRing 1.4s infinite;
+      border-radius: 0.75rem;
+    }
+    @keyframes tourOptionFadeIn {
+      0% { opacity: 0; transform: translateY(10px) scale(0.97); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .tour-option-fade {
+      opacity: 0;
+      animation: tourOptionFadeIn 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes welcomeModalPop {
+      0% { opacity: 0; transform: scale(0.92) translateY(14px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .welcome-pop-in {
+      animation: welcomeModalPop 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
   </style>
 </head>
@@ -311,8 +356,8 @@
     </aside>
 
     <!-- MOBILE DRAWER / OVERLAY -->
-    <div id="mobileDrawer" class="fixed inset-0 z-40 lg:hidden hidden bg-slate-900/60 backdrop-blur-sm transition-opacity">
-      <div class="fixed inset-y-0 left-0 w-72 bg-white dark:bg-slate-800 shadow-2xl flex flex-col p-4">
+    <div id="mobileDrawer" class="fixed inset-0 z-40 lg:hidden hidden opacity-0 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 ease-out">
+      <div id="mobileDrawerPanel" class="fixed inset-y-0 left-0 w-72 bg-white dark:bg-slate-800 shadow-2xl flex flex-col p-4 transform -translate-x-full transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]">
         <div class="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-700">
           <div class="flex items-center gap-2">
             <div class="w-8 h-8 rounded-lg bg-brand-600 text-white flex items-center justify-center font-bold text-sm">CA</div>
@@ -356,7 +401,7 @@
     </div>
 
     <!-- MAIN CONTENT AREA -->
-    <main class="flex-1 overflow-y-auto bg-slate-50 dark:bg-slate-900 pb-24 lg:pb-8">
+    <main class="flex-1 overflow-y-auto overscroll-none bg-slate-50 dark:bg-slate-900 pb-24 lg:pb-8">
       <!-- Sticky Tab Title Bar (Visible on all tabs except Dashboard) -->
       <div id="stickyTabBanner" class="hidden sticky top-0 z-20 bg-slate-50/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 px-4 sm:px-6 lg:px-8 py-2.5">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
@@ -668,6 +713,7 @@
                   <li><button type="button" data-footer-tab="settings" class="footer-nav-link hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Settings</button></li>
                   <li><button type="button" id="openSpecialThanksBtn" class="hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Special Thanks</button></li>
                   <li><button type="button" id="openPrivacyPolicyBtn" class="hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Privacy Policy</button></li>
+                  <li><button type="button" id="footerStartTourBtn" class="hover:text-[#1d1d1f] dark:hover:text-white hover:underline underline-offset-2 transition text-left">Interactive Tour</button></li>
                 </ul>
               </div>
             </div>
@@ -679,6 +725,8 @@
                 <button type="button" id="footerPrivacyInlineBtn" class="hover:text-[#1d1d1f] dark:hover:text-slate-300 hover:underline underline-offset-2 transition">Privacy Policy</button>
                 <span class="text-slate-300 dark:text-slate-700">|</span>
                 <button type="button" id="footerThanksInlineBtn" class="hover:text-[#1d1d1f] dark:hover:text-slate-300 hover:underline underline-offset-2 transition">Special Thanks</button>
+                <span class="text-slate-300 dark:text-slate-700">|</span>
+                <button type="button" id="footerTourInlineBtn" class="hover:text-[#1d1d1f] dark:hover:text-slate-300 hover:underline underline-offset-2 transition">Interactive Tour</button>
                 <span class="text-slate-300 dark:text-slate-700">|</span>
                 <span>India</span>
               </div>
@@ -1931,6 +1979,83 @@
     </div>
   </div>
 
+  <!-- ========================================== -->
+  <!-- WELCOME MENU MODAL (FIRST-TIME USERS) -->
+  <!-- ========================================== -->
+  <div id="welcomeHeroModal" class="fixed inset-0 z-[80] hidden bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4">
+    <div id="welcomeHeroCard" class="bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl rounded-3xl w-full max-w-lg p-6 sm:p-8 shadow-2xl border border-white/50 dark:border-slate-700 space-y-5 welcome-pop-in">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-700 to-indigo-500 text-white flex items-center justify-center font-extrabold text-lg shadow-lg shadow-brand-500/25 shrink-0">
+          CA
+        </div>
+        <div>
+          <span class="text-[10px] font-bold uppercase tracking-widest text-brand-600 dark:text-brand-400">Welcome to</span>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white leading-tight">CA Inter Tracker</h2>
+        </div>
+      </div>
+
+      <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+        Your complete offline-ready study planner for the <strong class="text-slate-900 dark:text-white">ICAI CA Intermediate</strong> exams. Take a quick interactive walkthrough to see how each tab and tool works together.
+      </p>
+
+      <div class="grid grid-cols-2 gap-2.5 text-xs">
+        <div class="tour-option-fade p-3 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50" style="animation-delay: 0.12s;">
+          <div class="font-bold text-indigo-800 dark:text-indigo-300">94 ICAI Chapters</div>
+          <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Two-way sync with To-Do List</div>
+        </div>
+        <div class="tour-option-fade p-3 rounded-2xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50" style="animation-delay: 0.24s;">
+          <div class="font-bold text-emerald-800 dark:text-emerald-300">Smart Pace &amp; Revisions</div>
+          <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Auto-prioritized daily picks</div>
+        </div>
+        <div class="tour-option-fade p-3 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/50" style="animation-delay: 0.36s;">
+          <div class="font-bold text-amber-800 dark:text-amber-300">Costing &amp; FM Checkers</div>
+          <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Instant EOQ, BEP, WACC, NPV</div>
+        </div>
+        <div class="tour-option-fade p-3 rounded-2xl bg-purple-50/70 dark:bg-purple-950/30 border border-purple-100 dark:border-purple-900/50" style="animation-delay: 0.48s;">
+          <div class="font-bold text-purple-800 dark:text-purple-300">Excel Study Plan</div>
+          <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Import &amp; track progress live</div>
+        </div>
+      </div>
+
+      <div class="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 pt-2">
+        <button type="button" id="skipWelcomeTourBtn" class="px-4 py-2.5 rounded-xl text-xs font-semibold text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition">
+          Skip Tutorial
+        </button>
+        <button type="button" id="startInteractiveTourBtn" class="px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white shadow-md shadow-brand-500/25 transition flex items-center justify-center gap-2">
+          <span>Start Interactive Tour</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- FLOATING INTERACTIVE TOUR GUIDE CARD (Compact Bottom Sheet on Mobile) -->
+  <!-- ========================================== -->
+  <div id="tourGuideCard" class="fixed bottom-[66px] lg:bottom-6 left-2 right-2 sm:left-auto sm:right-6 sm:w-[400px] max-h-[34vh] sm:max-h-[75vh] overflow-y-auto z-[75] hidden bg-white/95 dark:bg-slate-800/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl p-3.5 sm:p-5 shadow-2xl border-2 border-brand-500/60 dark:border-brand-400/50 space-y-2.5 sm:space-y-3.5 welcome-pop-in">
+    <div class="flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 min-w-0">
+        <span id="tourStepBadge" class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-brand-600 text-white shrink-0">1 / 7</span>
+        <h3 id="tourStepTitle" class="text-xs sm:text-base font-extrabold text-slate-900 dark:text-white truncate">Dashboard</h3>
+      </div>
+      <button type="button" id="tourSkipInlineBtn" class="text-[11px] font-semibold text-slate-400 hover:text-rose-500 transition shrink-0">Skip</button>
+    </div>
+
+    <p id="tourStepDesc" class="text-[11px] sm:text-xs text-slate-600 dark:text-slate-300 leading-snug"></p>
+
+    <!-- Compact Staggered Animated Options List -->
+    <div id="tourStepOptions" class="grid grid-cols-1 gap-1.5"></div>
+
+    <!-- Action Prompt / Controls -->
+    <div class="pt-2 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between gap-2">
+      <span id="tourClickPrompt" class="text-[10px] sm:text-[11px] font-semibold text-brand-600 dark:text-brand-400 leading-tight"></span>
+      <div class="flex items-center gap-1.5 shrink-0">
+        <button type="button" id="tourPrevBtn" class="px-2.5 py-1.5 rounded-xl text-[11px] sm:text-xs font-semibold bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-200 transition">Back</button>
+        <button type="button" id="tourNextBtn" class="px-3.5 py-1.5 rounded-xl text-[11px] sm:text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white shadow-sm transition">Next</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MOBILE CURTAIN SLIDE TRANSITION OVERLAY (iOS 26 Liquid Glass) -->
   <div id="mobileCurtainWipe" class="fixed inset-0 z-[70] hidden pointer-events-none overflow-hidden" aria-hidden="true">
     <div id="mobileCurtainAccent" class="absolute inset-[-10%] bg-white/25 dark:bg-indigo-400/15 backdrop-blur-md border-l border-white/50 dark:border-white/20"></div>
@@ -2466,6 +2591,10 @@
           expandedSubjects.add(subj.id);
           switchTab('subjects');
           renderSubjectTracker();
+          setTimeout(() => {
+            const targetCard = document.querySelector(`[data-subj-card="${subj.id}"]`);
+            if (targetCard) spotlightElement(targetCard, 2800);
+          }, 180);
         });
         container.appendChild(row);
       });
@@ -2890,6 +3019,7 @@
 
         const subjectCard = document.createElement('div');
         subjectCard.className = 'bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm overflow-hidden';
+        subjectCard.setAttribute('data-subj-card', subj.id);
         
         const isExpanded = expandedSubjects.has(subj.id);
         subjectCard.innerHTML = `
@@ -4261,7 +4391,9 @@
         }
       }
 
-      document.getElementById('mobileDrawer').classList.add('hidden');
+      closeMobileDrawer();
+      const mainScrollEl = document.querySelector('main');
+      if (mainScrollEl) mainScrollEl.scrollTop = 0;
       window.dispatchEvent(new Event('resize'));
     }
 
@@ -4270,7 +4402,7 @@
         const tab = btn.getAttribute('data-tab');
         if (!tab) return;
         if (btn.classList.contains('mobile-nav-btn') || btn.classList.contains('mobile-bottom-btn')) {
-          document.getElementById('mobileDrawer')?.classList.add('hidden');
+          closeMobileDrawer();
           triggerMobileCurtainAndSwitch(tab);
         } else {
           switchTab(tab);
@@ -4278,18 +4410,38 @@
       });
     });
 
-    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+    let mobileDrawerCloseTimer = null;
+    function openMobileDrawer() {
       const drawer = document.getElementById('mobileDrawer');
-      const panel = drawer?.querySelector('aside');
+      const panel = document.getElementById('mobileDrawerPanel');
+      if (!drawer || !panel) return;
+      if (mobileDrawerCloseTimer) { clearTimeout(mobileDrawerCloseTimer); mobileDrawerCloseTimer = null; }
       drawer.classList.remove('hidden');
-      if (panel) {
-        panel.classList.remove('drawer-clip-open');
-        void panel.offsetWidth;
-        panel.classList.add('drawer-clip-open');
-      }
-    });
-    document.getElementById('closeMobileDrawerBtn').addEventListener('click', () => {
-      document.getElementById('mobileDrawer').classList.add('hidden');
+      void drawer.offsetWidth;
+      drawer.classList.add('opacity-100');
+      drawer.classList.remove('opacity-0');
+      panel.classList.remove('-translate-x-full');
+      panel.classList.add('translate-x-0');
+    }
+
+    function closeMobileDrawer() {
+      const drawer = document.getElementById('mobileDrawer');
+      const panel = document.getElementById('mobileDrawerPanel');
+      if (!drawer || !panel || drawer.classList.contains('hidden')) return;
+      drawer.classList.remove('opacity-100');
+      drawer.classList.add('opacity-0');
+      panel.classList.remove('translate-x-0');
+      panel.classList.add('-translate-x-full');
+      if (mobileDrawerCloseTimer) clearTimeout(mobileDrawerCloseTimer);
+      mobileDrawerCloseTimer = setTimeout(() => {
+        drawer.classList.add('hidden');
+      }, 300);
+    }
+
+    document.getElementById('mobileMenuBtn').addEventListener('click', openMobileDrawer);
+    document.getElementById('closeMobileDrawerBtn').addEventListener('click', closeMobileDrawer);
+    document.getElementById('mobileDrawer').addEventListener('click', (e) => {
+      if (e.target.id === 'mobileDrawer') closeMobileDrawer();
     });
 
     // Quick Add Task Buttons
@@ -4560,7 +4712,7 @@
     // Change Exam button in dashboard
     document.getElementById('dashChangeExamBtn').addEventListener('click', () => {
       switchTab('settings');
-      document.getElementById('settingExamDate').focus();
+      setTimeout(() => spotlightElement('settingExamDate', 3200), 180);
     });
 
     // Extras Tool Window Navigation
@@ -4603,8 +4755,21 @@
 
     document.getElementById('extrasBackToGridBtn').addEventListener('click', showExtrasLauncherGrid);
 
+    function spotlightElement(elOrId, durationMs = 3200) {
+      const el = typeof elOrId === 'string' ? document.getElementById(elOrId) : elOrId;
+      if (!el) return;
+      el.classList.remove('spotlight-blink-target');
+      void el.offsetWidth;
+      el.classList.add('spotlight-blink-target');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        el.classList.remove('spotlight-blink-target');
+      }, durationMs);
+    }
+
     document.getElementById('dashAdjustPaceBtn').addEventListener('click', () => {
       openExtrasTool('pace');
+      setTimeout(() => spotlightElement('paceTargetDateInput', 3200), 180);
     });
 
     // Reset Extras to rounded-square grid when clicking Extras nav links
@@ -5104,8 +5269,236 @@
       // Populate Extras chapter dropdown
       populateExtrasChapterFilter();
 
-      // Render fresh clean view with NIL progress
+      // Initial view render
       refreshAllViews();
+
+      // Interactive Welcome & Guided Tour System
+      const TOUR_STORAGE_KEY = 'ca_inter_tour_completed_v1';
+      const TOUR_STEPS = [
+        {
+          tab: 'dashboard',
+          title: 'Dashboard Overview',
+          desc: 'Try tapping "+ New Task" in the top bar or scroll to view Group I & II progress, Study Pace, and Subject bars. Practice changes here will reset when the tour ends.',
+          prompt: 'Tap "Next" or click To-Do List tab →',
+          options: [
+            { label: 'Try: Group I & II / Pace', detail: 'Track syllabus % and chapters/day needed for Jan 2, 2027.' },
+            { label: 'Try: Subject Bars', detail: 'Tap any paper bar to jump straight to its chapters.' }
+          ]
+        },
+        {
+          tab: 'tasks',
+          title: 'To-Do List (Try Adding a Task!)',
+          desc: 'Tap "+ Create Study Task", enter a sample task (e.g. "AS 11") linked to a chapter, save it, then tick its checkbox to see progress update.',
+          prompt: 'Add/tick a sample task, then tap Subject Tracker →',
+          options: [
+            { label: 'Try: Create & Tick Task', detail: 'Completing a chapter task auto-marks the chapter done.' },
+            { label: 'Try: By Due Date & Select', detail: 'Sort by due date or use Select to bulk-delete tasks.' }
+          ]
+        },
+        {
+          tab: 'subjects',
+          title: 'Subject Tracker (Try Checking a Chapter!)',
+          desc: 'Tap any Paper below to expand its chapters, tick a chapter checkbox (notice the date box auto-fills!), or tap the ★ star / Notes icon.',
+          prompt: 'Expand a paper & try ticking, then tap Analytics →',
+          options: [
+            { label: 'Try: Tick Chapter & Date', detail: 'Completion date auto-fills in the date box.' },
+            { label: 'Try: Revision & Notes', detail: 'Set revision stage or save personal formulas/notes.' }
+          ]
+        },
+        {
+          tab: 'analytics',
+          title: 'Progress Analytics',
+          desc: 'Your practice task & chapter check updated these charts live! Compare completion across all 6 papers and High-Weightage coverage.',
+          prompt: 'Review charts, then tap Study Calendar →',
+          options: [
+            { label: 'Live Paper Charts', detail: 'Updates automatically from To-Do List & Subject Tracker.' },
+            { label: 'Focus Timer Logs', detail: 'Use the Timer button in the header to log study hours.' }
+          ]
+        },
+        {
+          tab: 'calendar',
+          title: 'Study Calendar (Try Year Zoom!)',
+          desc: 'Tap the year "2026" above the calendar to zoom out to all 12 months, then tap any month to zoom back in. Tap any date to inspect task statuses.',
+          prompt: 'Try clicking "2026", then tap Extras →',
+          options: [
+            { label: 'Try: Click Year "2026"', detail: 'Zooms out to Months & Years with smooth animation.' },
+            { label: 'Status-Only Dates', detail: 'Prevents accidental clicks while checking your schedule.' }
+          ]
+        },
+        {
+          tab: 'extras',
+          title: 'Extras Toolkit (Try Opening Any Tool!)',
+          desc: 'Tap any rounded-square tile—like "Practical Checkers" (EOQ/BEP/WACC/NPV), "What to Study Next", or "Study Plan" Excel import—then tap "Back to Extras".',
+          prompt: 'Open a tile to try it, then tap Settings →',
+          options: [
+            { label: 'Try: Practical Checkers', detail: 'Test live EOQ, BEP, WACC & NPV calculations.' },
+            { label: 'Try: Revision 4-Circles & Plan', detail: 'Click revision circles or import Excel (Date, Paper, Chapter).' }
+          ]
+        },
+        {
+          tab: 'settings',
+          title: 'Settings (Try Changing Any Option!)',
+          desc: 'Try changing Daily Study Hours or Theme Mode below—everything auto-saves! Once you finish or skip, all tour practice edits will be cleanly restored.',
+          prompt: 'Tap Finish to restore your progress & begin!',
+          options: [
+            { label: 'Try: Edit Any Preference', detail: 'Auto-saves immediately with no Save button needed.' },
+            { label: 'Safe Practice Reset', detail: 'All tour edits clear automatically when the tour ends.' }
+          ]
+        }
+      ];
+
+      let tourActive = false;
+      let tourStepIdx = 0;
+      let tourBackupSnapshot = null;
+
+      function clearTourHighlights() {
+        document.querySelectorAll('.tour-highlight-target').forEach(el => {
+          el.classList.remove('tour-highlight-target');
+        });
+      }
+
+      function highlightTourTargetTab(tabId) {
+        clearTourHighlights();
+        document.querySelectorAll(`.nav-btn[data-tab="${tabId}"], .mobile-bottom-btn[data-tab="${tabId}"]`).forEach(el => {
+          el.classList.add('tour-highlight-target');
+        });
+      }
+
+      function renderTourStep(idx) {
+        tourStepIdx = idx;
+        const step = TOUR_STEPS[idx];
+        if (!step) return;
+
+        if (step.tab === 'extras') showExtrasLauncherGrid();
+        switchTab(step.tab);
+
+        const nextStep = TOUR_STEPS[idx + 1];
+        if (nextStep) {
+          highlightTourTargetTab(nextStep.tab);
+        } else {
+          highlightTourTargetTab(step.tab);
+        }
+
+        document.getElementById('tourStepBadge').textContent = `${idx + 1} / ${TOUR_STEPS.length}`;
+        document.getElementById('tourStepTitle').textContent = step.title;
+        document.getElementById('tourStepDesc').textContent = step.desc;
+        document.getElementById('tourClickPrompt').textContent = step.prompt;
+
+        const prevBtn = document.getElementById('tourPrevBtn');
+        const nextBtn = document.getElementById('tourNextBtn');
+        prevBtn.disabled = idx === 0;
+        prevBtn.classList.toggle('opacity-40', idx === 0);
+        nextBtn.textContent = idx === TOUR_STEPS.length - 1 ? 'Finish' : 'Next →';
+
+        const optsEl = document.getElementById('tourStepOptions');
+        optsEl.innerHTML = '';
+        step.options.forEach((opt, oIdx) => {
+          const item = document.createElement('div');
+          item.className = 'tour-option-fade px-2.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 text-[11px]';
+          item.style.animationDelay = `${0.12 + oIdx * 0.2}s`;
+          item.innerHTML = `
+            <span class="font-bold text-slate-800 dark:text-slate-100">${opt.label}:</span>
+            <span class="text-slate-500 dark:text-slate-400">${opt.detail}</span>
+          `;
+          optsEl.appendChild(item);
+        });
+      }
+
+      function startInteractiveTour() {
+        // Snapshot current user state so any practice actions during the tour can be cleanly restored
+        const activeTabEl = document.querySelector('.tab-content.active');
+        const activeTabId = activeTabEl ? activeTabEl.id.replace('tab-', '') : 'dashboard';
+        tourBackupSnapshot = {
+          chapters: JSON.parse(JSON.stringify(appChapters)),
+          tasks: JSON.parse(JSON.stringify(appTasks)),
+          sessions: JSON.parse(JSON.stringify(appSessions)),
+          studyPlan: JSON.parse(JSON.stringify(appStudyPlan)),
+          settings: JSON.parse(JSON.stringify(appSettings)),
+          tabId: activeTabId
+        };
+
+        document.getElementById('welcomeHeroModal').classList.add('hidden');
+        document.getElementById('tourGuideCard').classList.remove('hidden');
+        tourActive = true;
+        renderTourStep(0);
+      }
+
+      function endInteractiveTour(completed = false) {
+        const wasTourActive = tourActive;
+        tourActive = false;
+        clearTourHighlights();
+        document.getElementById('welcomeHeroModal').classList.add('hidden');
+        document.getElementById('tourGuideCard').classList.add('hidden');
+
+        // Restore pre-tour state so nothing practiced during the tour persists
+        if (wasTourActive && tourBackupSnapshot) {
+          appChapters = JSON.parse(JSON.stringify(tourBackupSnapshot.chapters));
+          appTasks = JSON.parse(JSON.stringify(tourBackupSnapshot.tasks));
+          appSessions = JSON.parse(JSON.stringify(tourBackupSnapshot.sessions));
+          appStudyPlan = JSON.parse(JSON.stringify(tourBackupSnapshot.studyPlan));
+          appSettings = JSON.parse(JSON.stringify(tourBackupSnapshot.settings));
+          const restoreTab = tourBackupSnapshot.tabId || 'dashboard';
+          tourBackupSnapshot = null;
+          saveState();
+          applyEffectiveTheme(false);
+          refreshAllViews();
+          switchTab(restoreTab);
+        }
+
+        try {
+          localStorage.setItem(TOUR_STORAGE_KEY, 'true');
+        } catch (e) {}
+
+        if (completed) {
+          triggerConfettiCelebration();
+          showToast('Tour completed! Your original progress has been restored.', 'success');
+        }
+      }
+
+      // Allow clicking the highlighted tab itself to advance the tour!
+      document.querySelectorAll('.nav-btn, .mobile-nav-btn, .mobile-bottom-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (!tourActive) return;
+          const clickedTab = btn.getAttribute('data-tab');
+          const nextStep = TOUR_STEPS[tourStepIdx + 1];
+          if (nextStep && clickedTab === nextStep.tab) {
+            renderTourStep(tourStepIdx + 1);
+          }
+        });
+      });
+
+      document.getElementById('startInteractiveTourBtn').addEventListener('click', startInteractiveTour);
+      document.getElementById('skipWelcomeTourBtn').addEventListener('click', () => endInteractiveTour(false));
+      document.getElementById('tourSkipInlineBtn').addEventListener('click', () => endInteractiveTour(false));
+
+      document.getElementById('tourPrevBtn').addEventListener('click', () => {
+        if (tourStepIdx > 0) renderTourStep(tourStepIdx - 1);
+      });
+
+      document.getElementById('tourNextBtn').addEventListener('click', () => {
+        if (tourStepIdx < TOUR_STEPS.length - 1) {
+          renderTourStep(tourStepIdx + 1);
+        } else {
+          endInteractiveTour(true);
+        }
+      });
+
+      // Re-launch tour from Dashboard footer links
+      document.getElementById('footerStartTourBtn').addEventListener('click', () => {
+        document.getElementById('welcomeHeroModal').classList.remove('hidden');
+      });
+      document.getElementById('footerTourInlineBtn').addEventListener('click', () => {
+        document.getElementById('welcomeHeroModal').classList.remove('hidden');
+      });
+
+      // Auto-open Welcome Menu ONLY for first-time users
+      try {
+        if (!localStorage.getItem(TOUR_STORAGE_KEY)) {
+          setTimeout(() => {
+            document.getElementById('welcomeHeroModal').classList.remove('hidden');
+          }, 350);
+        }
+      } catch (e) {}
 
       // Live Exam countdown & Auto Night Mode ticker (every minute)
       setInterval(() => {
