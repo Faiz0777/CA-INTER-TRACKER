@@ -116,9 +116,66 @@
     .cal-anim-zoom-in-enter {
       animation: calZoomInEnter 0.3s ease-out forwards;
     }
+    @keyframes tabSlideUpEnter {
+      0% {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .tab-slide-up-active {
+      will-change: transform, opacity;
+      animation: tabSlideUpEnter 0.42s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .tab-slide-up-active > *:nth-child(1) {
+      animation: tabSlideUpEnter 0.42s cubic-bezier(0.16, 1, 0.3, 1) 0.03s both;
+    }
+    .tab-slide-up-active > *:nth-child(2) {
+      animation: tabSlideUpEnter 0.46s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+    }
+    .tab-slide-up-active > *:nth-child(3) {
+      animation: tabSlideUpEnter 0.50s cubic-bezier(0.16, 1, 0.3, 1) 0.13s both;
+    }
+    @keyframes mobileCurtainSweepAccent {
+      0% { transform: translate(115%, 0%) skew(-12deg, 0deg); }
+      42% { transform: translate(0%, 0%) skew(-12deg, 0deg); }
+      58% { transform: translate(0%, 0%) skew(-12deg, 0deg); }
+      100% { transform: translate(-115%, 0%) skew(-12deg, 0deg); }
+    }
+    @keyframes mobileCurtainSweepMain {
+      0% { transform: translate(118%, 0%) skew(-12deg, 0deg); }
+      45% { transform: translate(0%, 0%) skew(-12deg, 0deg); }
+      62% { transform: translate(0%, 0%) skew(-12deg, 0deg); }
+      100% { transform: translate(-118%, 0%) skew(-12deg, 0deg); }
+    }
+    .curtain-sweep-accent {
+      animation: mobileCurtainSweepAccent 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .curtain-sweep-main {
+      animation: mobileCurtainSweepMain 0.62s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes drawerClipReveal {
+      0% { clip-path: inset(0% 0% 100%); }
+      100% { clip-path: inset(0%); }
+    }
+    .drawer-clip-open {
+      animation: drawerClipReveal 0.36s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    input[type="date"] {
+      display: flex;
+      align-items: center;
+      line-height: 1.25;
+    }
+    input[type="date"]::-webkit-date-and-time-value {
+      text-align: left;
+      margin: 0;
+    }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen lg:h-screen lg:overflow-hidden flex flex-col antialiased transition-colors duration-200 overflow-x-hidden">
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 h-[100dvh] overflow-hidden flex flex-col antialiased transition-colors duration-200">
 
   <!-- TOP HEADER -->
   <header class="sticky top-0 z-30 shrink-0 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-2">
@@ -1516,52 +1573,54 @@
             <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Configure your target exam session, daily study goals, and manage your local offline backup.</p>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
             
             <!-- Exam & Goal Preferences -->
-            <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
-              <h3 class="text-sm font-bold text-slate-900 dark:text-white pb-2 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
-                <svg class="w-4 h-4 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                <span>Exam Target & Daily Study Goals</span>
-              </h3>
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between space-y-4">
+              <div class="space-y-4">
+                <h3 class="text-sm font-bold text-slate-900 dark:text-white pb-2 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
+                  <svg class="w-4 h-4 text-brand-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                  <span>Exam Target &amp; Daily Study Goals</span>
+                </h3>
 
-              <div>
-                <label for="settingExamTitle" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Target Examination Name</label>
-                <input type="text" id="settingExamTitle" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
-              </div>
-
-              <div>
-                <label for="settingExamDate" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Target Exam Date</label>
-                <input type="date" id="settingExamDate" class="block w-full min-w-0 appearance-none h-10 sm:h-9 px-3 py-2 text-sm sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
-              </div>
-
-              <div class="grid grid-cols-2 gap-3 pt-2">
                 <div>
-                  <label for="settingDailyTasks" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Daily Task Target</label>
-                  <input type="number" id="settingDailyTasks" min="1" max="20" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
+                  <label for="settingExamTitle" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">Target Examination Name</label>
+                  <input type="text" id="settingExamTitle" class="block w-full min-w-0 appearance-none h-10 px-3.5 text-sm sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
                 </div>
+
                 <div>
-                  <label for="settingDailyHours" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Daily Study Target (Hours)</label>
-                  <input type="number" id="settingDailyHours" min="1" max="18" step="0.5" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
+                  <label for="settingExamDate" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">Target Exam Date</label>
+                  <input type="date" id="settingExamDate" class="flex items-center w-full min-w-0 appearance-none h-10 px-3.5 text-sm sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label for="settingDailyTasks" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">Daily Task Target</label>
+                    <input type="number" id="settingDailyTasks" min="1" max="20" class="block w-full min-w-0 appearance-none h-10 px-3.5 text-sm sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
+                  </div>
+                  <div>
+                    <label for="settingDailyHours" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">Daily Study Hours</label>
+                    <input type="number" id="settingDailyHours" min="1" max="18" step="0.5" class="block w-full min-w-0 appearance-none h-10 px-3.5 text-sm sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
+                  </div>
+                </div>
+
+                <div class="pt-2 border-t border-slate-100 dark:border-slate-700">
+                  <label for="settingThemeMode" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1.5">Appearance &amp; Theme Mode</label>
+                  <select id="settingThemeMode" class="block w-full min-w-0 appearance-none h-10 px-3.5 text-sm sm:text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
+                    <option value="auto">Auto Night Mode (Dark from 7:00 PM to 6:00 AM)</option>
+                    <option value="system">Sync with Device Mode (Follow OS Light/Dark)</option>
+                    <option value="light">Always Light Mode</option>
+                    <option value="dark">Always Dark Mode</option>
+                  </select>
+                  <p id="settingThemeStatusHint" class="text-[11px] text-slate-400 mt-1.5">Automatically adapts theme based on your selection.</p>
                 </div>
               </div>
 
-              <div class="pt-2 border-t border-slate-100 dark:border-slate-700">
-                <label for="settingThemeMode" class="block text-xs font-semibold text-slate-600 dark:text-slate-300 mb-1">Appearance & Theme Mode</label>
-                <select id="settingThemeMode" class="w-full px-3 py-2 text-xs rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-brand-500 text-slate-800 dark:text-slate-200">
-                  <option value="auto">Auto Night Mode (Dark from 7:00 PM to 6:00 AM)</option>
-                  <option value="system">Sync with Device Mode (Follow OS Light/Dark)</option>
-                  <option value="light">Always Light Mode</option>
-                  <option value="dark">Always Dark Mode</option>
-                </select>
-                <p id="settingThemeStatusHint" class="text-[11px] text-slate-400 mt-1">Automatically adapts theme based on your selection.</p>
-              </div>
-
-              <p class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium pt-1">✓ Changes are saved automatically.</p>
+              <p class="text-[11px] text-emerald-600 dark:text-emerald-400 font-medium pt-2 border-t border-slate-100 dark:border-slate-700">✓ Changes are saved automatically.</p>
             </div>
 
             <!-- Local Data Storage & Backup / Restore -->
-            <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+            <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex flex-col justify-between space-y-4">
               <h3 class="text-sm font-bold text-slate-900 dark:text-white pb-2 border-b border-slate-100 dark:border-slate-700 flex items-center gap-2">
                 <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4"></path></svg>
                 <span>Local Storage & Backup</span>
@@ -1868,6 +1927,17 @@
       <div class="flex items-center justify-center gap-3">
         <button id="confirmCancelBtn" class="px-4 py-2 text-xs font-semibold rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700">Cancel</button>
         <button id="confirmProceedBtn" class="px-5 py-2 text-xs font-semibold rounded-xl bg-rose-600 hover:bg-rose-700 text-white shadow-sm transition">Yes, Proceed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE CURTAIN SLIDE TRANSITION OVERLAY (iOS 26 Liquid Glass) -->
+  <div id="mobileCurtainWipe" class="fixed inset-0 z-[70] hidden pointer-events-none overflow-hidden" aria-hidden="true">
+    <div id="mobileCurtainAccent" class="absolute inset-[-10%] bg-white/25 dark:bg-indigo-400/15 backdrop-blur-md border-l border-white/50 dark:border-white/20"></div>
+    <div id="mobileCurtainMain" class="absolute inset-[-10%] bg-white/60 dark:bg-slate-900/65 backdrop-blur-2xl backdrop-saturate-150 border-x border-white/60 dark:border-white/15 shadow-[0_8px_32px_rgba(0,0,0,0.12)] flex items-center justify-center">
+      <div class="text-center px-6 py-4 rounded-3xl bg-white/40 dark:bg-white/5 border border-white/50 dark:border-white/10 shadow-inner" style="transform: skew(12deg, 0deg);">
+        <div class="text-xl font-black tracking-widest text-slate-900 dark:text-white uppercase">CA Inter Tracker</div>
+        <div class="text-[11px] font-semibold tracking-wider text-brand-600 dark:text-indigo-400 mt-1 uppercase">Study Planner</div>
       </div>
     </div>
   </div>
@@ -2378,14 +2448,14 @@
         const row = document.createElement('div');
         row.className = 'p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-100 dark:border-slate-700/60 hover:border-brand-300 dark:hover:border-brand-700 transition cursor-pointer';
         row.innerHTML = `
-          <div class="flex items-center justify-between mb-1.5">
-            <div class="flex items-center gap-2">
-              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200">${subj.code}</span>
-              <span class="text-xs font-bold text-slate-900 dark:text-white truncate max-w-[200px] sm:max-w-xs">${subj.name}</span>
+          <div class="flex items-center justify-between gap-2 mb-1.5">
+            <div class="flex items-center gap-2 min-w-0 flex-1">
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 shrink-0">${subj.code}</span>
+              <span class="text-xs font-bold text-slate-900 dark:text-white truncate">${subj.name}</span>
             </div>
-            <div class="flex items-center gap-2">
-              <span class="text-xs text-slate-400">${sStat.completed}/${sStat.total} ch</span>
-              <span class="text-xs font-extrabold text-slate-800 dark:text-slate-100 mono">${sStat.percentage}%</span>
+            <div class="flex items-center justify-end gap-2.5 shrink-0">
+              <span class="text-[11px] sm:text-xs text-slate-400 whitespace-nowrap mono tabular-nums">${sStat.completed}/${sStat.total} ch</span>
+              <span class="w-10 text-right text-xs font-extrabold text-slate-800 dark:text-slate-100 mono tabular-nums">${sStat.percentage}%</span>
             </div>
           </div>
           <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
@@ -4106,9 +4176,49 @@
     // 6. NAVIGATION & TABS
     // ==========================================
 
+    let mobileCurtainBusy = false;
+    function triggerMobileCurtainAndSwitch(tabId) {
+      if (window.innerWidth >= 1024 || mobileCurtainBusy) {
+        switchTab(tabId);
+        return;
+      }
+      const wipe = document.getElementById('mobileCurtainWipe');
+      const accent = document.getElementById('mobileCurtainAccent');
+      const mainPanel = document.getElementById('mobileCurtainMain');
+      if (!wipe || !accent || !mainPanel) {
+        switchTab(tabId);
+        return;
+      }
+      mobileCurtainBusy = true;
+      wipe.classList.remove('hidden');
+      accent.classList.remove('curtain-sweep-accent');
+      mainPanel.classList.remove('curtain-sweep-main');
+      void wipe.offsetWidth;
+      accent.classList.add('curtain-sweep-accent');
+      mainPanel.classList.add('curtain-sweep-main');
+
+      setTimeout(() => {
+        switchTab(tabId);
+      }, 260);
+
+      setTimeout(() => {
+        wipe.classList.add('hidden');
+        accent.classList.remove('curtain-sweep-accent');
+        mainPanel.classList.remove('curtain-sweep-main');
+        mobileCurtainBusy = false;
+      }, 640);
+    }
+
     function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.getElementById(`tab-${tabId}`)?.classList.add('active');
+      document.querySelectorAll('.tab-content').forEach(el => {
+        el.classList.remove('active', 'tab-slide-up-active');
+      });
+      const targetSec = document.getElementById(`tab-${tabId}`);
+      if (targetSec) {
+        targetSec.classList.add('active');
+        void targetSec.offsetWidth;
+        targetSec.classList.add('tab-slide-up-active');
+      }
 
       document.querySelectorAll('.nav-btn').forEach(btn => {
         if (btn.getAttribute('data-tab') === tabId) {
@@ -4158,12 +4268,25 @@
     document.querySelectorAll('.nav-btn, .mobile-nav-btn, .mobile-bottom-btn, .quick-nav-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const tab = btn.getAttribute('data-tab');
-        if (tab) switchTab(tab);
+        if (!tab) return;
+        if (btn.classList.contains('mobile-nav-btn') || btn.classList.contains('mobile-bottom-btn')) {
+          document.getElementById('mobileDrawer')?.classList.add('hidden');
+          triggerMobileCurtainAndSwitch(tab);
+        } else {
+          switchTab(tab);
+        }
       });
     });
 
     document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-      document.getElementById('mobileDrawer').classList.remove('hidden');
+      const drawer = document.getElementById('mobileDrawer');
+      const panel = drawer?.querySelector('aside');
+      drawer.classList.remove('hidden');
+      if (panel) {
+        panel.classList.remove('drawer-clip-open');
+        void panel.offsetWidth;
+        panel.classList.add('drawer-clip-open');
+      }
     });
     document.getElementById('closeMobileDrawerBtn').addEventListener('click', () => {
       document.getElementById('mobileDrawer').classList.add('hidden');
@@ -4399,7 +4522,7 @@
       } else {
         document.documentElement.classList.remove('dark');
       }
-      showToast(`Switched to ${nextDark ? 'Dark' : 'Light'} Mode (Settings preference unchanged).`, 'info');
+      showToast(`Switched to ${nextDark ? 'Dark' : 'Light'} Mode.`, 'info');
     });
 
     // Instant live preview when user changes theme mode in Settings
